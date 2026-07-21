@@ -92,7 +92,11 @@ class Organizer :
         logger.info("Organizer finished")
 
     def show_summary(self):
+<<<<<<< HEAD
         print("\n===== Operation Summary =====")
+=======
+        print("\n===== Sortify Summary =====")
+>>>>>>> features/change-summary
 
         if not self.stats:
             print("No files processed.")
