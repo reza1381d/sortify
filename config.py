@@ -33,3 +33,8 @@ PROGRAM_EXTENSIONS = [
     ".exe",
     ".msi"
 ]
+
+WORD_EXTENSIONS = [
+    ".doc",
+    ".docx"
+]

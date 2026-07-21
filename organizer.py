@@ -1,6 +1,6 @@
 from pathlib import Path
 from logger_config import logger
-from config import IMAGE_EXTENSIONS,VIDEO_EXTENSIONS,MUSIC_EXTENSIONS,PDF_EXTENSIONS,ARCHIVE_EXTENSIONS,PROGRAM_EXTENSIONS
+from config import IMAGE_EXTENSIONS,VIDEO_EXTENSIONS,MUSIC_EXTENSIONS,PDF_EXTENSIONS,ARCHIVE_EXTENSIONS,PROGRAM_EXTENSIONS,WORD_EXTENSIONS
 import shutil
 
 
@@ -10,7 +10,8 @@ FILE_TYPES = {
         "Musics" : MUSIC_EXTENSIONS,
         "PDFs" : PDF_EXTENSIONS,
         "Archives" : ARCHIVE_EXTENSIONS,
-        "Programs" : PROGRAM_EXTENSIONS
+        "Programs" : PROGRAM_EXTENSIONS,
+        "Documents": WORD_EXTENSIONS
     }
 
 

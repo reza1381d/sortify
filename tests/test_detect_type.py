@@ -9,6 +9,7 @@ from organizer import Organizer
         ("book.pdf", "PDFs"),
         ("movie.mp4", "Videos"),
         ("song.mp3", "Musics"),
+        ("file.docx", "Documents"),
         ("app.exe", "Programs")
     ]
 )
