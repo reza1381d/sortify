@@ -1,126 +1,167 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+
 from .organizer import Organizer
 
-root = tk.Tk()
 
-root.title("Sortify")
-root.geometry("500x350")
+class SortifyGUI:
 
-frame = tk.Frame(root, padx=20, pady=20)
-frame.pack(fill="both", expand=True)
+    def __init__(self, root):
 
-title = tk.Label(
-    frame,
-    text="Sortify",
-    font=("Segoe UI", 20, "bold")
-)
+        self.root = root
 
-title.pack(pady=(0, 5))
+        self.root.title("Sortify")
+        self.root.geometry("500x350")
+
+        self.folder_path = tk.StringVar()
+
+        self.create_widgets()
 
 
-subtitle = tk.Label(
-    frame,
-    text="Organize your files in one click",
-    font=("Segoe UI", 10)
-)
+    def create_widgets(self):
 
-subtitle.pack(pady=(0, 20))
-
-
-folder_path = tk.StringVar()
-
-def browse_folder():
-    folder = filedialog.askdirectory()
-
-    if folder:
-        folder_path.set(folder)
-
-
-folder_frame = tk.Frame(frame)
-folder_frame.pack(fill="x", pady=10)
-
-
-def organize_files():
-    folder = folder_path.get()
-
-    if not folder:
-        messagebox.showwarning(
-            "NO Folder",
-            "Please select a folder first."
-        )
-        return
-
-    organizer = Organizer(
-        folder,
-        verbose=False
+        frame = tk.Frame(
+            self.root,
+            padx=20,
+            pady=20
         )
 
-    organizer.organize()
-    summary = ""
-
-    for folder, count in organizer.stats.items():
-        if count > 0:
-            summary += f"{folder}: {count} files\n"
-
-    result_label.config(
-        text= summary if summary else "No files processed."
-    )
+        frame.pack(
+            fill="both",
+            expand=True
+        )
 
 
-   
+        title = tk.Label(
+            frame,
+            text="Sortify",
+            font=("Segoe UI", 20, "bold")
+        )
+
+        title.pack(pady=(0, 5))
 
 
-organize_button = tk.Button(
-    frame,
-    text="Organize Files",
-    command=organize_files,
-    width=20,
-    height=2
-)
+        subtitle = tk.Label(
+            frame,
+            text="Organize your files in one click",
+            font=("Segoe UI", 10)
+        )
 
-organize_button.pack(pady=20)
+        subtitle.pack(pady=(0, 20))
 
 
-result_label = tk.Label(
-    frame,
-    text="",
-    font=("Segoe UI", 10),
-    justify="left",
-    anchor="w"
-)
+        folder_frame = tk.Frame(frame)
 
-result_label.pack(pady=10)
+        folder_frame.pack(
+            fill="x",
+            pady=10
+        )
 
 
-folder_entry = tk.Entry(
-    folder_frame,
-    textvariable= folder_path
-)
+        folder_entry = tk.Entry(
+            folder_frame,
+            textvariable=self.folder_path
+        )
 
-folder_entry.pack(
-    side= "left",
-    fill= "x",
-    expand=True
-)
+        folder_entry.pack(
+            side="left",
+            fill="x",
+            expand=True
+        )
 
 
-browse_button = tk.Button(
-    folder_frame,
-    text= "Browse",
-    command= browse_folder
-)
+        browse_button = tk.Button(
+            folder_frame,
+            text="Browse",
+            command=self.browse_folder
+        )
 
-browse_button.pack(
-    side= "left",
-    padx=10
-)
+        browse_button.pack(
+            side="left",
+            padx=10
+        )
+
+
+        organize_button = tk.Button(
+            frame,
+            text="Organize Files",
+            command=self.organize_files,
+            width=20,
+            height=2
+        )
+
+        organize_button.pack(pady=20)
+
+
+        self.result_label = tk.Label(
+            frame,
+            text="",
+            font=("Segoe UI", 10),
+            justify="left",
+            anchor="w"
+        )
+
+        self.result_label.pack(pady=10)
+
+
+
+    def browse_folder(self):
+
+        folder = filedialog.askdirectory()
+
+        if folder:
+            self.folder_path.set(folder)
+
+
+
+    def organize_files(self):
+
+        folder = self.folder_path.get()
+
+        if not folder:
+
+            messagebox.showwarning(
+                "No Folder",
+                "Please select a folder first."
+            )
+
+            return
+
+
+        organizer = Organizer(
+            folder,
+            verbose=False
+        )
+
+        organizer.organize()
+
+
+        summary = ""
+
+        for folder, count in organizer.stats.items():
+
+            if count > 0:
+
+                summary += f"{folder}: {count} files\n"
+
+
+        self.result_label.config(
+            text=summary if summary else "No files processed."
+        )
+
 
 
 def run():
+
+    root = tk.Tk()
+
+    app = SortifyGUI(root)
+
     root.mainloop()
 
 
+
 if __name__ == "__main__":
+
     run()
