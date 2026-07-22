@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+import threading
 
 from .organizer import Organizer
 
@@ -15,6 +16,7 @@ class SortifyGUI:
         self.root.geometry("500x350")
 
         self.folder_path = tk.StringVar()
+        self.status_text = tk.StringVar()
 
         self.create_widgets()
 
@@ -94,6 +96,15 @@ class SortifyGUI:
         organize_button.pack(pady=20)
 
 
+        status_label = tk.Label(
+            frame,
+            textvariable=self.status_text,
+            font=("Segoe UI", 10)
+        )
+
+        status_label.pack(pady=5)
+
+
         self.result_label = tk.Label(
             frame,
             text="",
@@ -129,10 +140,26 @@ class SortifyGUI:
             return
 
 
+        self.status_text.set("Organizing files...")
+        self.root.update_idletasks()
+
+
+        thread = threading.Thread(
+            target=self.run_organizer,
+            args=(folder,)
+        )
+
+        thread.start()
+
+
+
+    def run_organizer(self, folder):
+
         organizer = Organizer(
             folder,
             verbose=False
         )
+
 
         organizer.organize()
 
@@ -146,8 +173,18 @@ class SortifyGUI:
                 summary += f"{folder}: {count} files\n"
 
 
-        self.result_label.config(
-            text=summary if summary else "No files processed."
+
+        self.root.after(
+            0,
+            lambda: self.result_label.config(
+                text=summary if summary else "No files processed."
+            )
+        )
+
+
+        self.root.after(
+            0,
+            lambda: self.status_text.set("Completed ✓")
         )
 
 
