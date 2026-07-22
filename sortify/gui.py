@@ -6,7 +6,7 @@ from .organizer import Organizer
 root = tk.Tk()
 
 root.title("Sortify")
-root.geometry("500x250")
+root.geometry("500x350")
 
 frame = tk.Frame(root, padx=20, pady=20)
 frame.pack(fill="both", expand=True)
@@ -23,7 +23,7 @@ title.pack(pady=(0, 5))
 subtitle = tk.Label(
     frame,
     text="Organize your files in one click",
-    font=("Segeo UI", 10)
+    font=("Segoe UI", 10)
 )
 
 subtitle.pack(pady=(0, 20))
@@ -64,12 +64,12 @@ def organize_files():
         if count > 0:
             summary += f"{folder}: {count} files\n"
 
-
-    messagebox.showinfo(
-        "Sortify summary",
-        summary if summary else "No files processed."
+    result_label.config(
+        text= summary if summary else "No files processed."
     )
 
+
+   
 
 
 organize_button = tk.Button(
@@ -81,6 +81,17 @@ organize_button = tk.Button(
 )
 
 organize_button.pack(pady=20)
+
+
+result_label = tk.Label(
+    frame,
+    text="",
+    font=("Segoe UI", 10),
+    justify="left",
+    anchor="w"
+)
+
+result_label.pack(pady=10)
 
 
 folder_entry = tk.Entry(
@@ -107,4 +118,9 @@ browse_button.pack(
 )
 
 
-root.mainloop()
+def run():
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    run()
