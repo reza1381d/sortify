@@ -1,2 +1,0 @@
-[console_scripts]
-sortify = sortify.__main__:main
