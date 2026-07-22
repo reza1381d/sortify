@@ -7,6 +7,18 @@ import threading
 
 from .organizer import Organizer
 
+import sys
+from pathlib import Path
+
+import ctypes
+
+def resource_path(relative_path):
+    try:
+        base_path = Path(sys._MEIPASS)
+    except Exception:
+        base_path = Path(__file__).resolve().parent.parent
+
+    return base_path / relative_path
 
 
 class SortifyGUI:
@@ -17,6 +29,9 @@ class SortifyGUI:
         self.root = root
 
         self.root.title("Sortify")
+        self.root.iconbitmap(
+        resource_path("assets/sortify.ico")
+        )
         self.root.geometry("500x400")
 
 
@@ -302,6 +317,10 @@ class SortifyGUI:
 
 def run():
 
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+        "Sortify.SortifyGUI.1.0"
+    )
+    
     root = tk.Tk()
 
     app = SortifyGUI(root)

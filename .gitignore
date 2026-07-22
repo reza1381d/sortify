@@ -28,3 +28,6 @@ build/
 # PyInstaller
 build/
 *.spec
+
+# Generated executables
+*.exe
