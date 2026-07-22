@@ -17,11 +17,21 @@ FILE_TYPES = {
 
 class Organizer :
 
-    def __init__(self, folder, dry_run=False):
+    def __init__(self, folder, dry_run=False, verbose=True):
 
         self.folder = Path(folder)
         self.dry_run = dry_run
-        self.stats = {}
+        self.stats = {
+            "Images": 0,
+            "Videos": 0,
+            "Musics": 0,
+            "PDFs": 0,
+            "Archives": 0,
+            "Programs": 0,
+            "Documents": 0,
+            "Other": 0
+        }
+        self.verbose = verbose
 
 
     def show_files (self) :
@@ -48,13 +58,14 @@ class Organizer :
 
 
     def update_stats(self, folder_name):
-        self.stats[folder_name] = self.stats.get(folder_name, 0) + 1
+        self.stats[folder_name] += 1
     
     def move_file(self, file, folder_name):
 
         try:
             if self.dry_run:
-                print(f"{file.name} ---> {folder_name}")
+                if self.verbose:
+                    print(f"{file.name} ---> {folder_name}")
                 self.update_stats(folder_name)
                 return
             destination_folder = self.folder / folder_name
@@ -70,29 +81,32 @@ class Organizer :
     
     def organize(self):
 
-        print("Organizing files...\n")
+        if self.verbose:
+            print("Organizing files...\n")
         logger.info("Organizer started")
         files = [
             file for file in self.folder.iterdir()
             if file.is_file()
         ]
         if not files :
-            print("No files found!")
+            if self.verbose:
+                print("No files found!")
             logger.info("No files found!")
             return
         total_files = len(files)
         for index, file in enumerate(files, start=1):
             folder_name = self.detect_type(file)
-            print(f"[{index}/{total_files}] {file.name} --> {folder_name}")
+            if self.verbose:
+                print(f"[{index}/{total_files}] {file.name} --> {folder_name}")
             if folder_name != "Other":
                 self.move_file(file, folder_name)
             else:
+                self.update_stats("Other")
                 logger.warning(f"Unknown file type: {file.name}")
 
         logger.info("Organizer finished")
 
     def show_summary(self):
-
         print("\n===== Sortify Summary =====")
 
         if not self.stats:
