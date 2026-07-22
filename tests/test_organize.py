@@ -1,5 +1,5 @@
 from pathlib import Path
-from organizer import Organizer
+from sortify.organizer import Organizer
 
 
 def test_organize(tmp_path):

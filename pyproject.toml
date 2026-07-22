@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sortify"
+version = "1.0.0"
+description = "Automatic file organizer"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "Reza" }
+]
+
+[project.scripts]
+sortify = "sortify.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sortify*"]

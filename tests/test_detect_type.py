@@ -1,6 +1,6 @@
 from pathlib import Path
 import pytest
-from organizer import Organizer
+from sortify.organizer import Organizer
 
 @pytest.mark.parametrize(
     "filename, expected",

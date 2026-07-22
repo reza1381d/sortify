@@ -1,4 +1,4 @@
-from organizer import Organizer
+from sortify.organizer import Organizer
 
 
 def test_dry_run(organizer):

@@ -1,6 +1,6 @@
 from pathlib import Path
-from logger_config import logger
-from config import IMAGE_EXTENSIONS,VIDEO_EXTENSIONS,MUSIC_EXTENSIONS,PDF_EXTENSIONS,ARCHIVE_EXTENSIONS,PROGRAM_EXTENSIONS,WORD_EXTENSIONS
+from .logger_config import logger
+from .config import IMAGE_EXTENSIONS,VIDEO_EXTENSIONS,MUSIC_EXTENSIONS,PDF_EXTENSIONS,ARCHIVE_EXTENSIONS,PROGRAM_EXTENSIONS,WORD_EXTENSIONS
 import shutil
 
 
@@ -92,11 +92,8 @@ class Organizer :
         logger.info("Organizer finished")
 
     def show_summary(self):
-<<<<<<< HEAD
-        print("\n===== Operation Summary =====")
-=======
+
         print("\n===== Sortify Summary =====")
->>>>>>> features/change-summary
 
         if not self.stats:
             print("No files processed.")
